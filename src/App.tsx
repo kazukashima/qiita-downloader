@@ -5,13 +5,15 @@ import { fetchQiitaArticles } from './utils/qiitaAPI';
 
 function App() {
   const [articles,setArticles] = useState([]);
-  const [token, setToken]=useState("");
-  const [userId, setUserId]=useState("");
+  const [token, setToken] = useState("");
+  const [userId, setUserId] = useState("");
+
 
   const handleSave=async(id:string,tk:string)=>{
     setUserId(id);
     setToken(tk)
-
+  console.log("Token state:", token);
+  console.log("UserID state:", userId);
 
     const items= await fetchQiitaArticles(id,tk);
     setArticles(items);
