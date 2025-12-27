@@ -50,10 +50,23 @@
   border-radius: 4px;
 }
 
-/* 改ページ制御 */
-.qiita-preview pre,
+/* コードは切ってOK */
+.qiita-preview pre {
+  page-break-inside: auto;
+}
+
+/* 文章系だけ切らない */
 .qiita-preview blockquote,
 .qiita-preview ul,
 .qiita-preview ol {
   page-break-inside: avoid;
+}
+
+
+.qiita-preview {
+  width: 190mm;   /* A4 - 余白分 */
+  max-width: 100%;
+}
+html, body {
+  background: #fff !important;
 }
