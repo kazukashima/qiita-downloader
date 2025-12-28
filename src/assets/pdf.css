@@ -27,7 +27,7 @@
   margin: 0.6em 0;
 }
 
-/* 🚨 最重要：コードブロック */
+/*コードブロック */
 .qiita-preview pre {
   background: #f5f5f5 !important; /* 白系にする */
   color: #000 !important;
