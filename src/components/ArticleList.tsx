@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 
 import { markdownToQiitaHTML } from "../lib/markdownToQiitaHTML";
-import html2pdf from "html2pdf.js";
+
 
 type Article = {
   id: string;
@@ -59,21 +59,27 @@ export function ArticleList({ articles }: { articles: Article[] }) {
   /* -------------------------
    * PDF ダウンロード（MVP3）
    * ------------------------- */
-  const handlePdfDownload = async (title: string, body: string) => {
-    const html = markdownToQiitaHTML(body);
+const handlePdfDownload = async (title: string, body: string) => {
+  
+  if (typeof window === "undefined") return;
 
-    // iframe（PDF専用）
-    const iframe = document.createElement("iframe");
-    iframe.style.position = "fixed";
-    iframe.style.right = "0";
-    iframe.style.bottom = "0";
-    iframe.style.width = "0";
-    iframe.style.height = "0";
-    iframe.style.border = "0";
-    document.body.appendChild(iframe);
+  //  ブラウザでのみ読み込む
+  const { default: html2pdf } = await import("html2pdf.js");
 
-    const doc = iframe.contentDocument!;
-    doc.open();
+  const html = markdownToQiitaHTML(body);
+
+  // ===== iframe（PDF専用）=====
+  const iframe = document.createElement("iframe");
+  iframe.style.position = "fixed";
+  iframe.style.right = "0";
+  iframe.style.bottom = "0";
+  iframe.style.width = "0";
+  iframe.style.height = "0";
+  iframe.style.border = "0";
+  document.body.appendChild(iframe);
+
+  const doc = iframe.contentDocument!;
+  doc.open();
 
     doc.write(`
 <!doctype html>
