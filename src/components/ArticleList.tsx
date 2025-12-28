@@ -134,6 +134,22 @@ code {
 blockquote, ul, ol, table {
   page-break-inside: avoid;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 12px 0;
+
+  /*  画像は途中で切らせない */
+  page-break-inside: avoid;
+  page-break-after: avoid;
+
+  p > img {
+  page-break-inside: avoid;
+}
+}
+
 </style>
 </head>
 <body>
@@ -151,24 +167,25 @@ blockquote, ul, ol, table {
 
     // PDF生成
     await html2pdf()
-      .set({
-        filename: `${title}.pdf`,
-        margin: [10, 8, 10, 8],
-        html2canvas: {
-          scale: 1.5,
-          backgroundColor: "#fff",
-        },
-        jsPDF: {
-          unit: "mm",
-          format: "a4",
-          orientation: "portrait",
-        },
-        pagebreak: {
-          mode: ["css", "legacy"],
-        },
-      } as any)
-      .from(doc.body)
-      .save();
+  .set({
+    filename: `${title}.pdf`,
+    margin: [10, 8, 10, 8],
+    html2canvas: {
+      scale: 1.5,
+      backgroundColor: "#fff",
+
+      //  追加
+      useCORS: true,
+      allowTaint: true,
+    },
+    jsPDF: {
+      unit: "mm",
+      format: "a4",
+      orientation: "portrait",
+    },
+  } as any)
+  .from(doc.body)
+  .save();
 
     document.body.removeChild(iframe);
   };
